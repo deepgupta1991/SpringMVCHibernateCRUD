@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.jboss.logging.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,8 +18,9 @@ import com.jwt.service.EmployeeService;
 @Controller
 public class EmployeeController {
 
-	private static final Logger logger = Logger
-			.getLogger(EmployeeController.class);
+	/*private static final Logger logger = Logger
+			.getLogger(EmployeeController.class);*/
+	private static final Logger logger=Logger.getLogger(EmployeeController.class);
 
 	public EmployeeController() {
 		System.out.println("EmployeeController()");
@@ -30,6 +31,9 @@ public class EmployeeController {
 
 	@RequestMapping(value = "/")
 	public ModelAndView listEmployee(ModelAndView model) throws IOException {
+		logger.info("This is a viewall info log entry");
+		System.out.println("Hi");
+		logger.error("This is a viewall error log entry");
 		List<Employee> listEmployee = employeeService.getAllEmployees();
 		model.addObject("listEmployee", listEmployee);
 		model.setViewName("home");
@@ -64,6 +68,8 @@ public class EmployeeController {
 
 	@RequestMapping(value = "/editEmployee", method = RequestMethod.GET)
 	public ModelAndView editContact(HttpServletRequest request) {
+		logger.info("This is a editemployee info log entry");
+		logger.error("This is a editemployee error log entry");
 		int employeeId = Integer.parseInt(request.getParameter("id"));
 		Employee employee = employeeService.getEmployee(employeeId);
 		ModelAndView model = new ModelAndView("EmployeeForm");
